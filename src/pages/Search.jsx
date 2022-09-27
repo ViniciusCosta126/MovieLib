@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
-import MovieCard from "../components/MovieCard";
+import MovieCard from "../components/MovieCard/MovieCard";
 
 const searchURL = import.meta.env.VITE_SEARCH;
 const apikey = import.meta.env.VITE_API_KEY;
@@ -31,7 +31,12 @@ const Search = () => {
       <div className="movies-container">
         {movies.length === 0 && <p>Carregando...</p>}
         {movies.length > 0 &&
-          movies.map((movie) => <MovieCard movie={movie} key={movie.id} />)}
+          movies.map((movie) =>{
+            if( new Date (movie.release_date) < new Date() ){
+              return <MovieCard movie={movie} key={movie.id} />
+            }
+            return
+          })}
       </div>
     </div>
   );
